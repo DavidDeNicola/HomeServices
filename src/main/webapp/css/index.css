@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+/* Caricare DOPO shared.css */
+
+
+/* BODY — sfondo con immagine */
+body {
+    background-image: url("immagini/sfondoIndex.png");
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    padding: 20px;
+}
+
+
+/* CARD CENTRALE DI BENVENUTO */
+.card-welcome {
+    width: 90%;
+    max-width: 600px;
+    border: none;
+    background-color: rgba(220, 220, 220, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+
+/* BOTTONI HOMEPAGE */
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-outline-secondary {
+    font-weight: 600;
+    border-width: 2px;
+}

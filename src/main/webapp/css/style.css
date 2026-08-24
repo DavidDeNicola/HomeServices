@@ -1,0 +1,203 @@
+@charset "UTF-8";
+
+/* Caricare DOPO shared.css. */
+
+
+/* BODY — sfondo grigio area utente */
+body {
+    background-color: #8D99AE;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    padding-top: 80px; /* compensa la navbar fixed-top */
+    padding-bottom: 20px;
+}
+
+
+/* SEZIONE DI BENVENUTO (user-home) */
+.welcome-section {
+    background-color: #313D5A;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+
+/* CARD GENERICHE */
+.card {
+    background-color: #EDF2F4;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card img {
+    transition: transform 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+
+/* LISTA PROFESSIONISTI (list-pro) */
+.pro-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.pro-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pro-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.categoria-badge {
+    background-color: #416FDD;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 10px 0;
+    display: inline-block;
+}
+
+.img-container {
+    height: 250px;
+    width: 100%;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: scale-down;
+}
+
+.category-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(49, 61, 90, 0.85);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.btn-contatta {
+    background-color: #313D5A;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-contatta:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+
+/* FORM RICHIESTA SERVIZIO (request-pro) */
+.request-container {
+    padding: 2rem 1rem;
+}
+
+.request-form label {
+    font-weight: 600;
+    color: #313D5A;
+}
+
+.request-form input,
+.request-form select,
+.request-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-family: inherit;
+}
+
+
+/* SLIDE LIST PRO */
+#vRange {
+    
+    background-color: #adb5bd !important; 
+    height: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+#vRange::-webkit-slider-runnable-track {
+    background-color: #adb5bd; 
+    border-radius: 5px;
+    height: 8px;
+}
+
+#vRange::-webkit-slider-thumb {
+    background: #313D5A; 
+    border: 2px solid #fff;
+    width: 18px;
+    height: 18px;
+    margin-top: -5px; 
+    -webkit-appearance: none;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+
+#vRange::-moz-range-track {
+    background-color: #adb5bd;
+    height: 8px;
+    border-radius: 5px;
+}
+
+#vRange::-moz-range-thumb {
+    background: #313D5A;
+    border: 2px solid #fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}

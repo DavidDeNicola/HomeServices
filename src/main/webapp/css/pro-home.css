@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+:root {
+    --primary: #2c3e50;
+    --primary-light: #3f5870;
+    --secondary: #3498db;
+    --secondary-light: #5dade2;
+    --accent: #e67e22;
+    --accent-light: #f39c12;
+
+    --success: #27ae60;
+    --warning: #f1c40f;
+    --danger: #c0392b;
+
+    --bg: #f4f7f6;
+    --white: #ffffff;
+    --text: #333;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* Card */
+.card {
+    background: var(--white);
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+    overflow: hidden;	
+}	
+.logo{
+	height: 10px;
+	widht: auto;
+	height: 25px;
+}
+
+/* Header */
+header, .navbar {
+    background: var(--primary) !important;
+    color: var(--white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Status richieste */
+.status {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.status-attesa { color: var(--warning); }
+.status-corso { color: var(--secondary); }
+.status-completata { color: var(--success); }
+
+/* List items */
+.list-group-item {
+    border: none;
+    border-left: 4px solid var(--secondary);
+    margin-bottom: 10px;
+    background: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.form-control, .form-select{
+	border-radius: 10px;
+	border: 2px solid #eee;
+}
+.form-control:focus{
+	border-color: var(--secondary);
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+}
+
+.btn{
+	border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+}
+.btn-primary, .bg-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light) !important;
+}
+
+.btn-secondary, .bg-secondary {
+    background-color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-light) !important;
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    color: white;
+}
+
+.btn-accent:hover {
+    background-color: var(--accent-light);
+}
+
+
+.btn-outline-success-custom {
+    border: 2px solid #198754;
+    color: #198754;
+    background-color: transparent;
+    transition: 0.25s;
+}
+
+.btn-outline-success-custom:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.btn-outline-danger-custom {
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    background-color: transparent;
+    transition: 0.25s;
+}
+
+.btn-outline-danger-custom:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+
+

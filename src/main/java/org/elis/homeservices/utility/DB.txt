@@ -1,0 +1,176 @@
+CREATE DATABASE home_services_db;
+
+USE home_services_db;
+
+CREATE TABLE citta (
+	id int unsigned primary key auto_increment,
+	nome varchar(30) not null
+);
+
+CREATE TABLE utente (
+	id int unsigned primary key auto_increment,
+	nome varchar(30) not null,
+	cognome varchar(30) not null,
+	email varchar(100) not null unique,
+	password varchar(16) not null,
+	dataNascita date not null,
+	codiceFiscale varchar(16) unique,
+	ruolo tinyint not null,
+	tariffa decimal(6,2),
+	id_citta int unsigned not null,
+	foreign key (id_citta) references citta(id),
+
+	CONSTRAINT valore_ruolo CHECK(ruolo>=0 AND ruolo<=2)
+);
+
+CREATE TABLE segnalazione (
+	id int unsigned primary key auto_increment,
+	motivazione text(500) not null,
+	sanzionato boolean not null default false,
+	id_utente_segnalato int unsigned not null,
+	id_utente_segnalante int unsigned not null,
+	foreign key (id_utente_segnalato) references utente(id),
+	foreign key (id_utente_segnalante) references utente(id)
+);
+
+CREATE TABLE disponibilita (
+	id int unsigned primary key auto_increment,
+	data date not null,
+	da time,
+	a time,
+	id_utente int unsigned not null,
+	foreign key (id_utente) references utente(id)
+);
+
+CREATE TABLE veicolo (
+	id int unsigned primary key auto_increment,
+	nome varchar(30) not null
+);
+
+CREATE TABLE utente_veicolo (
+	id int unsigned primary key auto_increment,
+	id_utente int unsigned not null,
+	id_veicolo int unsigned not null,
+	foreign key (id_utente) references utente(id),
+	foreign key (id_veicolo) references veicolo(id)
+);
+
+CREATE TABLE immagine (
+	id int unsigned primary key auto_increment,
+	nome varchar(30),
+	percorso varchar(150) not null unique,
+	isFotoProfilo boolean not null,
+	id_utente int unsigned not null,
+	foreign key (id_utente) references utente(id)
+);
+
+CREATE TABLE recensione (
+	id int unsigned primary key auto_increment,
+	voto tinyint not null,
+	descrizione text(500),
+	data date not null,
+	segnalata boolean not null default false,
+	id_utente_scrive int unsigned not null,
+	id_utente_riceve int unsigned not null,
+	foreign key (id_utente_scrive) references utente(id),
+	foreign key (id_utente_riceve) references utente(id),
+
+	CONSTRAINT recensione_stesso_id_utente CHECK(id_utente_scrive != id_utente_riceve)
+);
+
+CREATE TABLE professione (
+	id int unsigned primary key auto_increment,
+	nome varchar(30) not null
+);
+
+CREATE TABLE utente_professione (
+	id int unsigned primary key auto_increment,
+	id_utente int unsigned not null,
+	id_professione int unsigned not null,
+	foreign key (id_utente) references utente(id),
+	foreign key (id_professione) references professione(id)
+);
+
+CREATE TABLE richiesta (
+	id int unsigned primary key auto_increment,
+	descrizione text(1000) not null,
+	data date not null,
+	da time not null,
+	a time not null,
+	indirizzo varchar(100) not null,
+	stato tinyint not null,
+	id_recensione int unsigned,
+	id_utente_richiede int unsigned not null,
+	id_utente_riceve int unsigned not null,
+	id_professione int unsigned not null,
+	foreign key (id_recensione) references recensione(id),
+	foreign key (id_utente_richiede) references utente(id),
+	foreign key (id_utente_riceve) references utente(id),
+	foreign key (id_professione) references professione(id),
+
+	CONSTRAINT richiesta_stesso_id_utente CHECK(id_utente_richiede != id_utente_riceve),
+	CONSTRAINT valore_stato CHECK(stato>=0 AND stato <=2)
+);
+
+CREATE TABLE formpro (
+	id int unsigned primary key auto_increment,
+	codiceFiscale varchar(16) unique,
+	tariffa decimal(6,2),
+	id_citta int unsigned not null,
+	id_professione int unsigned not null,
+	id_utente int unsigned not null,
+	foreign key (id_citta) references citta(id),
+	foreign key (id_professione) references professione(id),
+	foreign key (id_utente) references utente(id)
+);
+
+INSERT INTO citta(nome) VALUES 
+("Roma"), ("Napoli"), ("Firenze");
+
+INSERT INTO utente(nome, cognome, email, password, dataNascita, codiceFiscale, ruolo, tariffa, id_citta) VALUES 
+("admin", "admin", "admin@gmail.com", "Password1!", "2004-12-12", NULL, 2, NULL, 1),
+("Dario", "Verdi", "dario.verdi@gmail.com", "Password1!", "2004-12-12", "VRDDRA04T12H501U", 0, NULL, 1),
+("Ciro", "Muro", "ciro.furto@yahoo.com", "Password1!", "1967-9-11", "MRUCRI167P11F839", 1, 100.00, 2),
+("Roberto", "Benigni", "roberto.benigni@outlook.com", "Password1!", "1952-10-27", "BNGRRT52R27C312O", 1, 200.00, 3);
+
+INSERT INTO disponibilita(data, da, a, id_utente) VALUES 
+("2026-07-06", "09:00:00", "14:00:00", 3),
+("2026-07-06", "15:00:00", "19:00:00", 3),
+("2026-02-09", "14:00:00", "15:00:00", 4);
+
+INSERT INTO professione(nome) VALUES 
+("Muratore"), 
+("Idraulico"), 
+("Elettricista");
+
+INSERT INTO utente_professione(id_utente, id_professione) VALUES
+(3, 1),
+(3, 3),
+(4, 2),
+(4, 3);
+
+INSERT INTO veicolo(nome) VALUES 
+("Alfa Romeo"),
+("Pandino");
+
+INSERT INTO utente_veicolo(id_utente, id_veicolo) VALUES
+(3, 2),
+(4, 1);
+
+INSERT INTO richiesta(descrizione, data, da, a, indirizzo, stato, id_utente_richiede, id_utente_riceve, id_professione) 
+VALUES 
+("Vorrei riparare il muro che ho fatto cadere sbattendo sul muro con la macchina",
+"2026-07-06", "16:00:00", "19:00:00", "Via Luigi Rossi 10", 0, 2, 3, 1),
+("Vorrei riparare la televisione col pezzotto per le partite della maggica",
+"2026-07-06", "10:00:00", "12:00:00", "Via Luigi Rossi 10", 2, 2, 4, 3),
+("Vorrei far riparare il mio lavandino al fantomatico comico Roberto Benigni",
+"2026-02-09", "14:00:00", "15:00:00", "Via Brombeis 104", 2, 3, 4, 2);
+
+INSERT INTO recensione(voto, descrizione, data, id_utente_scrive, id_utente_riceve) VALUES
+(8, "Il grande Roberto Benigni è sempre soddisfacente a riparare lavandini", "2026-02-09", 3, 4);
+
+UPDATE richiesta SET id_recensione = 1 WHERE id = 3;
+
+INSERT INTO segnalazione(motivazione, id_utente_segnalato, id_utente_segnalante) VALUES
+("Benigni è un comunista, non va bene", 4, 3),
+("Non è verho, non sohno un hcomunistah", 3, 4);

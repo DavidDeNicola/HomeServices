@@ -1,0 +1,48 @@
+@charset "UTF-8";
+body {
+    background: #8D99AE;
+    min-height: 100vh;
+}
+/* Effetto sulla Navbar */
+.sfondo {
+    background-color: #313D5A !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+.navbar.sfondo{
+	background-color: #313D5A;
+}
+.nav-link:hover{
+	color: #E8B923 !important; 
+    background: none !important;
+    box-shadow: none !important;
+}
+/* Effetto sul contenuto principale */
+main{
+    border-radius: 10px;
+}
+main.sfondo2{
+    background-color: #EDF2F4;
+}
+/* List group per le azioni*/
+.list-group {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #eeeeee;
+}
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    border-color: #f1f1f1;
+    font-weight: 500;
+}
+.list-group-item-action:hover {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+}
+.bi {
+    font-size: 1.1rem;
+    vertical-align: middle;
+}

@@ -1,0 +1,15 @@
+/build/
+target/
+bin/
+build/
+*.class
+*.iml
+*.log
+.project
+.settings/
+.metadata/
+.classpath
+.DS_Store
+.idea/
+Thumbs.db
+persistence.xml
