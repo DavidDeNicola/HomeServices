@@ -1,0 +1,34 @@
+name: homeservices
+
+services:
+  mysql-homeservices:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: home_services_db
+    volumes:
+      - mysql-homeservices-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  homeservices-app:
+    build: .
+    depends_on:
+      mysql-homeservices:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql-homeservices:3306/home_services_db
+      DB_USER: root
+      DB_PASS: password
+      DEMO_MODE: "true"
+
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql-homeservices-data:

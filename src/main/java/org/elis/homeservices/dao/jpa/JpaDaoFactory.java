@@ -44,14 +44,9 @@ public class JpaDaoFactory extends DaoFactory{
 	public JpaDaoFactory() {
 		Map<String,String> properties = new HashMap<String, String>();
 		properties.put("jakarta.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
-		properties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost:3306/home_services_db");
-		properties.put("jakarta.persistence.jdbc.user", "root");
-		if(System.getenv("DB_PASS") != null) {
-			properties.put("jakarta.persistence.jdbc.password", System.getenv("DB_PASS"));
-		}
-		else {
-			properties.put("jakarta.persistence.jdbc.password", "root");
-		}
+		properties.put("jakarta.persistence.jdbc.url", env("DB_URL", "jdbc:mysql://localhost:3306/home_services_db"));
+		properties.put("jakarta.persistence.jdbc.user", env("DB_USER", "root"));
+		properties.put("jakarta.persistence.jdbc.password", env("DB_PASS", "root"));
 		properties.put("jakarta.persistence.schema-generation.database.action", "drop-and-create");
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.format_sql", "true");
@@ -119,6 +114,12 @@ public class JpaDaoFactory extends DaoFactory{
 	@Override
 	public FormProDAO getFormProDAO() {
 		return formProDao;
+	}
+
+
+	private static String env(String nome, String predefinito) {
+		String valore = System.getenv(nome);
+		return valore != null ? valore : predefinito;
 	}
 	
 }

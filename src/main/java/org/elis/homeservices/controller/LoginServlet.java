@@ -74,50 +74,50 @@ public class LoginServlet extends HttpServlet {
 			Utente utente = utenteDao.findByEmailPass(email, password);
 			HttpSession session = request.getSession();
 			session.setAttribute("utente", utente);
-			String codice = "";
-			for(int i=0;i<6;i++) {
-				int n= 10;
-				int casuale= (int) (Math.floor(Math.random()*n));
-				codice+=casuale;
+			boolean demo = "true".equals(System.getenv("DEMO_MODE"));
+
+			String codice;
+			if (demo) {
+    			codice = "123456";
+			} else {
+    			codice = "";
+    			for (int i = 0; i < 6; i++) {
+        			codice += (int) (Math.floor(Math.random() * 10));
+    			}
 			}
-			
+
 			System.out.println(codice);
 			session.setAttribute("codiceVerifica", codice);
 
-			final String username = "dario.balella@gmail.com";
-			final String password2 = "hozlxldvtkdapwmg";
+			if (!demo) {
+    			final String username = System.getenv("MAIL_USER");
+    			final String password2 = System.getenv("MAIL_PASS");
 
-			Properties props = new Properties();
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.port", "587");
+    			Properties props = new Properties();
+    			props.put("mail.smtp.auth", "true");
+    			props.put("mail.smtp.starttls.enable", "true");
+    			props.put("mail.smtp.host", "smtp.gmail.com");
+    			props.put("mail.smtp.port", "587");
 
-			Session session2 = Session.getInstance(props,
-					new Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(username, password2);
-				}
-			});
+    			Session session2 = Session.getInstance(props, new Authenticator() {
+    			    protected PasswordAuthentication getPasswordAuthentication() {
+        			    return new PasswordAuthentication(username, password2);
+        			}
+    			});
 
-			try {
-
-				Message message = new MimeMessage(session2);
-				message.setFrom(new InternetAddress(username));
-				message.setRecipients(
-						Message.RecipientType.TO,
-						InternetAddress.parse(email)
-						);
-				message.setSubject("Team di supporto HomeServices");
-				message.setText("Salve! Il tuo codice monouso è: "+codice);
-
-				Transport.send(message);
-
-				System.out.println("Email inviata!");
-
-			} catch (MessagingException er) {
-				er.printStackTrace();
+   				try {
+    			    Message message = new MimeMessage(session2);
+    			    message.setFrom(new InternetAddress(username));
+    			    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+    			    message.setSubject("Team di supporto HomeServices");
+    			    message.setText("Salve! Il tuo codice monouso è: " + codice);
+    			    Transport.send(message);
+    			    System.out.println("Email inviata!");
+    			} catch (MessagingException er) {
+    			    er.printStackTrace();
+    			}
 			}
+			
 			session.setAttribute("arrivoDa", "login");
 			session.setAttribute("email", email);
 			response.sendRedirect("auth");
